@@ -13,5 +13,12 @@ class Coach extends Fcf{
     function set_profile(){
         
     }
+
+    /* check add requests */
+    function check_requests(){
+        $sql = "select * from requests where coach_id = ".$_SESSION['id'];
+        $result = $this->conn->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
 ?>

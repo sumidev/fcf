@@ -1,7 +1,8 @@
 <?php 
 require_once('../classes/Coach.php');
 $fcf = new Coach();
-    $coach_data = $fcf->get_user_data($_SESSION['id'],$_SESSION['role']); 
+$requests = $fcf->check_requests();
+$coach_data = $fcf->get_user_data($_SESSION['id'],$_SESSION['role']); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +19,10 @@ $fcf = new Coach();
 <h4>Name : <?= $coach_data['name']; ?></h4>
 <h4>Email : <?= $coach_data['email']; ?></h4>
 <h3><a href="?logout=true">logout</a></h3>
+
+<pre>
+<?php print_r($requests); 
+die();?>
 
     
 </body>

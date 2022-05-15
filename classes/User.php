@@ -32,4 +32,29 @@ class User extends Fcf{
         endif;
         return $data;
     }
+
+    /* coach_check() check whether coach is already add or not */
+    function coach_check($id){
+        $sql = "select * from requests where user_id = ".$_SESSION['id']." AND coach_id = '$id' ";
+        $result = $this->conn->query($sql);
+        if ($result->num_rows > 0) {
+            return 0;
+        }else{
+            return 1;
+        }
+    }
+
+    function coach_add($request){
+        $msg = false;
+        if($request['add']){
+            $sql = "insert into requests (user_id,coach_id,requestTo,requestFrom) values ('".$_SESSION['id']."','".$request['id']."','2','1')";
+            $msg = "Request Sent";
+        }else{
+            $sql = "delete from requests where user_id = ".$_SESSION['id']." AND coach_id = ".$request['id'];
+            $msg= "Coach Removed";
+        }
+        if($this->conn->query($sql) === TRUE) :
+            return $msg;
+        endif;
+    }
 }
