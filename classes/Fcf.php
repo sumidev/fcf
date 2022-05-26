@@ -65,5 +65,9 @@ class Fcf extends Connection{
         $result = $this->conn->query($sql);
         return $result->fetch_assoc();
     }
+
+    function get_friends($request){
+
+    }
 }
 ?>

@@ -5,6 +5,7 @@ if (isset($_GET['msg'])) :
 endif;
 $fcf = new User();
 $user_data = $fcf->get_user_data($_SESSION['id'], $_SESSION['role']);
+$added_coach = $fcf->
 ?>
 <?php include('common/header.php') ?>
 <?php include('common/navbar.php') ?>
