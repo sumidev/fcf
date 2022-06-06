@@ -1,42 +1,71 @@
 <?php
 require_once('../classes/User.php');
+$fcf = new User();
 if (isset($_GET['msg'])) :
     $msg = $_GET['msg'];
 endif;
-$fcf = new User();
-$user_data = $fcf->get_user_data($_SESSION['id'], $_SESSION['role']);
-$added_coach = $fcf->
+// $added_coach = $fcf->
 ?>
 <?php include('common/header.php') ?>
-<?php include('common/navbar.php') ?>
-<?php if (isset($msg)) : ?>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong><?= $msg ?></strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-<?php endif; ?>
-<h2>Welcome to the User dashboard</h2>
-<h4>Name : <?= $user_data['name']; ?></h4>
-<h4>Email : <?= $user_data['email']; ?></h4>
-<?php if (!$user_data['is_profile_completed']) : ?>
-    <h3><a href="profile.php">complete your profile</a></h3>
-<?php else : ?>
-    <div class="row mt-5">
-        <?php $coach_list = $fcf->coach_suggestion($user_data);
-            foreach ($coach_list as $list) : ?>
-            <div class="col-sm-3">
-                <div class="card border-secondary mb-3" style="max-width: 18rem;">
-                    <div class="card-header"><?= $list['name'] ?></div>
-                    <div class="card-body text-secondary">
-                        <h6 class="card-title">Expertise : <?= $list['expertise'] ?></h6>
-                        <p class="card-text"><?= substr($list['summary'], 0, 120) ?> ...</p>
-                        <a href="view_coach_profile.php?id=<?= $list['user_id'] ?>"/>view profile</a>
+<?php include('common/preloader.php') ?>
+<div id="wrapper">
+    <?php include('common/top-navbar.php') ?>
+    <?php include('common/left-navbar.php') ?>
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">User Dashboard</h4>
+                </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Dashboard</a></li>
+                        <li class="active">User Dashboard</li>
+                    </ol>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+            <?php if (!$user_data['is_profile_completed']) : ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger">
+                        <a href="profile.php" style="color:white">Complete your profile</a>
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
+            <?php endif; ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="white-box">
+                        <h3 class="box-title">Suggested Coaches</h3>
+                        <div class="row">
+                            <?php $coach_list = $fcf->coach_suggestion($user_data);
+                            foreach ($coach_list as $list) : ?>
+                            <div class="col-md-3 mb-5 mt-5">
+                                <div class="card">
+                                    <img class="card-img-top image-responsive" src="<?= $list['profile_pic'] ?>"
+                                        alt="Card image cap" style="width: 100%;object-fit: contain;height:200px;object-position:top">
+                                    <div class="card-block">
+                                        <h4 class="card-title"><?= ucfirst($list['name']) ?> - [<?= ucfirst($list['expertise']) ?>]</h4>
+                                        <p class="card-text"><?= substr($list['summary'], 0, 120) ?> ...</p>
+                                        <a href="view_coach_profile.php?id=<?= $list['user_id'] ?>" class="btn btn-primary">view profile</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <?php include('common/right-navbar.php') ?>
+
+        </div>
+        <!-- /.container-fluid -->
+        <footer class="footer text-center"> 2022 &copy; FCF Developed by Anshita </footer>
     </div>
-<?php endif; ?>
+    <!-- /#page-wrapper -->
+</div>
 <?php include('common/footer.php') ?>

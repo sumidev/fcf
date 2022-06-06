@@ -11,10 +11,23 @@ class Fcf extends Connection{
         endif;
     }
 
+    function guest(){
+        if(isset($_SESSION['role'])):
+            if($_SESSION['role'] == '3'):
+                header("Location: ../admin/");
+            elseif($_SESSION['role'] == '2'):
+                header("Location: ../coach/");
+            else:
+                header("Location: ../user/");
+            endif;
+        endif;
+    }
+
     function login($request){
         $sql = "select id,role from users where email = '".$request['email']."' AND password = '".$request['password']."' AND is_activated = '1' ";
         $result = $this->conn->query($sql);
         if ($row = $result->fetch_assoc()):
+            $_SESSION['name'] = $row['name'];
             $_SESSION['id'] =$row['id']; 
             $_SESSION['role']= $row['role'];
             if($row['role'] == '3'):
@@ -64,6 +77,28 @@ class Fcf extends Connection{
         endif;
         $result = $this->conn->query($sql);
         return $result->fetch_assoc();
+    }
+
+    function set_profile_pic($request){
+        $target_dir = "../uploads/profile_pics/";
+        $target_file = $target_dir .time().basename($request["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        if($request["size"] > 1000000){
+            $uploadOk = 0;
+        }
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+            $uploadOk = 0;
+        }
+        if ($uploadOk == 0) {
+            return 0;
+        } else {
+            if (move_uploaded_file($request["tmp_name"], $target_file)) {
+                return $target_file;
+            } else {
+                return 0;
+            }
+        }
     }
 
     function get_friends($request){

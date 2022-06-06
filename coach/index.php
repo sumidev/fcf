@@ -1,29 +1,48 @@
-<?php 
+<?php
 require_once('../classes/Coach.php');
 $fcf = new Coach();
-$requests = $fcf->check_requests();
-$coach_data = $fcf->get_user_data($_SESSION['id'],$_SESSION['role']); 
+if (isset($_GET['msg'])) :
+    $msg = $_GET['msg'];
+endif;
+// $added_coach = $fcf->
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coach Dashboard</title>
-</head>
-<body>
+<?php include('common/header.php') ?>
+<?php include('common/preloader.php') ?>
+<div id="wrapper">
+    <?php include('common/top-navbar.php') ?>
+    <?php include('common/left-navbar.php') ?>
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Coach Dashboard</h4>
+                </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Dashboard</a></li>
+                        <li class="active">Coach Dashboard</li>
+                    </ol>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
 
+            <?php if (!$coach_data['is_profile_completed']) : ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger">
+                        <a href="profile.php" style="color:white">Complete your profile</a>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
 
-<h2>Welcome to the Coach dashboard</h2>
-<h4>Name : <?= $coach_data['name']; ?></h4>
-<h4>Email : <?= $coach_data['email']; ?></h4>
-<h3><a href="?logout=true">logout</a></h3>
+            <?php include('common/right-navbar.php') ?>
 
-<pre>
-<?php print_r($requests); 
-die();?>
-
-    
-</body>
-</html>
+        </div>
+        <!-- /.container-fluid -->
+        <footer class="footer text-center"> 2022 &copy; FCF Developed by Anshita </footer>
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<?php include('common/footer.php') ?>

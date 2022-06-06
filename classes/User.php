@@ -11,7 +11,9 @@ class User extends Fcf{
     }
 
     function set_profile($request){
-        $sql = "insert into user_profile (user_id,age,gender,weight,height,requirement) values ('" . $_SESSION['id'] . "','" . $request['age'] . "','" . $request['gender'] . "','" . $request['weight'] . "','" . $request['height'] . "','" . json_encode($request['requirements']) . "')";
+        $profile_pic = $this->set_profile_pic($_FILES['photo']);
+        $sql = "insert into user_profile (user_id,profile_pic,age,gender,weight,height,requirement) values ('" . $_SESSION['id'] . "','" . $profile_pic . "','" . $request['age'] . "','" . $request['gender'] . "','" . $request['weight'] . "','" . $request['height'] . "','" . json_encode($request['requirements']) . "')";
+        echo $sql."<br>";
         if ($this->conn->query($sql) === TRUE) :
             $msg = $this->profile_completed($_SESSION['id']);
             header("Location: /fcf/user/?msg=$msg");
@@ -22,8 +24,14 @@ class User extends Fcf{
 
     function coach_suggestion($user){
         $data = array();
-        $req = implode("' OR coach_profile.expertise = '", json_decode($user['requirement']));
-        $sql = "select users.* , coach_profile.* from users left join coach_profile on users.id = coach_profile.user_id where (coach_profile.expertise = '$req') AND users.is_activated = '1'";
+        if(isset($user['requirement'])){
+            $req = implode("' OR coach_profile.expertise = '", json_decode($user['requirement']));
+        $sql = "select users.* , coach_profile.* from users INNER JOIN coach_profile on users.id = coach_profile.user_id LEFT JOIN orders on coach_profile.user_id = orders.coach_id where (coach_profile.expertise = '$req') AND users.is_activated = '1' AND (orders.coach_id is NULL OR orders.user_id is NULL)";
+        echo $sql;
+        }else{
+            $sql = "select users.* , coach_profile.* from users inner join coach_profile on users.id = coach_profile.user_id where users.is_activated = '1'";
+        }
+        
         $result = $this->conn->query($sql);
         if ($result->num_rows > 0) :
             while ($row = $result->fetch_assoc()) {
@@ -54,7 +62,21 @@ class User extends Fcf{
             $msg= "Coach Removed";
         }
         if($this->conn->query($sql) === TRUE) :
-            return $msg;
+            header("Location: view_coach_profile.php?id=".$request['id']."");
         endif;
+    }
+
+    function requests_sent(){
+        $data = array();
+        $sql = "select users.*,coach_profile.* from coach_profile JOIN users on  coach_profile.user_id = users.id JOIN requests on users.id = requests.coach_id where requests.user_id='".$_SESSION['id']."'";
+        $result = $this->conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                array_push($data, $row);
+            }
+        }else{
+            return 0;
+        }
+        return $data;
     }
 }
