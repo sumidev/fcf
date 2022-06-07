@@ -2,8 +2,8 @@
 <nav class="navbar navbar-default navbar-static-top m-b-0">
     <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)"
             data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
-        <div class="top-left-part"><a class="logo" href="index.html"><b><img src="../assets/plugins/images/eliteadmin-logo.png"
-                        alt="home" /></a></div>
+        <div class="top-left-part"><a class="logo" href="index.php"><b><img
+                        src="../assets/plugins/images/eliteadmin-logo.png" alt="home" /></a></div>
         <ul class="nav navbar-top-links navbar-left hidden-xs">
             <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i
                         class="icon-arrow-left-circle ti-menu"></i></a></li>
@@ -19,7 +19,7 @@
                     </li>
                     <li>
                         <div class="message-center" id="noti">
-                            
+
                         </div>
                     </li>
                     <li>
@@ -29,15 +29,14 @@
                 </ul>
                 <!-- /.dropdown-messages -->
             </li>
-            </li>
             <!-- /.dropdown -->
             <li class="dropdown">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img
-                        src="<?= ($coach_data['profile_pic'])? $coach_data['profile_pic'] :'../assets/plugins/images/avatar.webp' ?>" alt="user-img" width="36" height="36" class="img-circle"><b
-                        class="hidden-xs"><?= $_SESSION['name']; ?></b> </a>
+                        src="<?= ($coach_data['profile_pic'])? $coach_data['profile_pic'] :'../assets/plugins/images/avatar.webp' ?>"
+                        alt="user-img" width="36" height="36" class="img-circle"><b
+                        class="hidden-xs"><?= $coach_data['name']; ?></b> </a>
                 <ul class="dropdown-menu dropdown-user animated flipInY">
                     <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                    <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
                     <li><a href="?logout=true"><i class="fa fa-power-off"></i> Logout</a></li>
                 </ul>
                 <!-- /.dropdown-user -->

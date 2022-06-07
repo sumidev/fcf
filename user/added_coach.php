@@ -1,7 +1,7 @@
 <?php
 require_once('../classes/User.php');
 $fcf = new User();
-$coach_list = $fcf->requests_sent();
+$coach_list = $fcf->get_added_coach();
 ?>
 <?php include('common/header.php') ?>
 
@@ -17,50 +17,52 @@ $coach_list = $fcf->requests_sent();
                 <div class="col-md-12">
                     <div class="row bg-title">
                         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                            <h4 class="page-title">Sent Requests</h4>
+                            <h4 class="page-title">Added Coaches</h4>
                         </div>
                         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                             <ol class="breadcrumb">
                                 <li><a href="#">Dashboard</a></li>
-                                <li class="active">Sent Requests</li>
+                                <li class="active">Added Coaches</li>
                             </ol>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
                     <?php if($coach_list): ?>
-                    <div class="white-box">
-                        <h3 class="box-title">Sent Requests</h3>
-                        <div class="row">
-                            <?php foreach ($coach_list as $list) : ?>
-                            <div class="col-md-3 mb-5 mt-5">
-                                <div class="card">
-                                    <img class="card-img-top" src="<?= $list['profile_pic'] ?>" alt="Card image cap"
-                                        style="width: 100%;object-fit: contain;height:200px;object-position:top">
-                                    <div class="card-block">
-                                        <h4 class="card-title"><?= ucfirst($list['name']) ?> -
-                                            [<?= ucfirst($list['expertise']) ?>]</h4>
-                                        <p class="card-text"><?= substr($list['summary'], 0, 120) ?> ...</p>
+                    <!-- .row -->
+                    <div class="row el-element-overlay m-b-40">
+                        <?php foreach ($coach_list as $list) : ?>
+                        <!-- /.usercard -->
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <div class="white-box">
+                                <div class="el-card-item">
+                                    <div class="el-card-avatar el-overlay-1"> <img src="<?= $list['profile_pic'] ?>" />
                                     </div>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Age : <?= $list['age'] ?></li>
-                                        <li class="list-group-item">Gender : <?= ucfirst($list['gender']) ?></li>
-                                        <li class="list-group-item">Exp : <?= $list['experience'] ?> </li>
-                                    </ul>
-                                    <div class="card-block">
-                                        <a href="view_coach_profile.php?id=<?= $list['user_id'] ?>"
-                                            class="btn btn-primary">view
-                                            profile</a>
-                                        <a class="btn btn-success disabled">Request Sent</a>
+                                    <div class="el-card-content">
+                                        <h3 class="box-title"><?= ucfirst($list['name']) ?> -
+                                            [<?= ucfirst($list['gender']) ?>]</h3>
+                                        <h5>Expertise :
+                                            <?= ucwords($list['expertise']) ?></h5>
+                                        <h5> Experience :
+                                            <?= ucwords($list['experience']) ?> yr</h5>
+                                        <br />
+                                    </div>
+                                    <div class="el-card-content">
+                                        <a href="view_coach_profile.php?id=<?=$list['user_id']?>"
+                                            class="btn btn-info">view profile</a>
                                     </div>
                                 </div>
-                            </div>
-                            <?php endforeach; ?>
 
+                            </div>
                         </div>
+                        <!-- /.usercard-->
+                        <?php endforeach; ?>
+
                     </div>
+                    
+                    <!-- /.row -->
                     <?php else : ?>
                     <div class="alert alert-primary mt-4">
-                        <a style="color:white">No Sent Request !</a>
+                        <a style="color:white">No Client Added !</a>
                     </div>
                     <?php endif; ?>
                 </div>

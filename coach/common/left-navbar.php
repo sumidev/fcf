@@ -10,11 +10,15 @@
                                 data-icon="&#xe006;"></i> <span class="hide-menu">Clients<span class="fa arrow"></span>
                         </a>
                     </li>
-                    <li> <a href="requests.php" class="waves-effect"><i class="linea-icon linea-basic fa-fw"
-                                data-icon=">"></i> <span class="hide-menu">Client's Requests<span class="fa arrow"></span>
+                    <li> <a href="client_requests.php" class="waves-effect"><i class="linea-icon linea-basic fa-fw"
+                                data-icon="l"></i> <span class="hide-menu">Client's Requests<span class="fa arrow"></span>
                         </a>
                     </li>
-                    <li> <a href="#" class="waves-effect"><i class="linea-icon linea-basic fa-fw"
+                    <li> <a href="sent_requests.php" class="waves-effect"><i class="linea-icon linea-basic fa-fw"
+                                data-icon=">"></i> <span class="hide-menu">Sent Requests<span class="fa arrow"></span>
+                        </a>
+                    </li>
+                    <li> <a href="coach_profile.php" class="waves-effect"><i class="linea-icon linea-basic fa-fw"
                                 data-icon="&#xe005;"></i> <span class="hide-menu">Profile Settings<span class="fa arrow"></span>
                         </a>
                     </li>

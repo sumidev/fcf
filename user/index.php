@@ -50,11 +50,11 @@ endif;
                                     <div class="card-block">
                                         <h4 class="card-title"><?= ucfirst($list['name']) ?> - [<?= ucfirst($list['expertise']) ?>]</h4>
                                         <p class="card-text"><?= substr($list['summary'], 0, 120) ?> ...</p>
-                                        <a href="view_coach_profile.php?id=<?= $list['user_id'] ?>" class="btn btn-primary">view profile</a>
+                                        <a href="view_coach_profile.php?id=<?= $list['user_id'] ?>" class="btn btn-info">view profile</a>
                                     </div>
                                 </div>
                             </div>
-                            <?php endforeach; ?>
+                            <?php endforeach;?>
                         </div>
                     </div>
                 </div>

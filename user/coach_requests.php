@@ -1,7 +1,10 @@
 <?php
 require_once('../classes/User.php');
 $fcf = new User();
-$coach_list = $fcf->requests_sent();
+if(isset($_GET['add']) && in_array($_GET['add'],array(0,1))){
+   $fcf->coach_request(['id' => $_GET['id'],'add' => $_GET['add']]);
+}
+$coach_list = $fcf->check_requests();
 ?>
 <?php include('common/header.php') ?>
 
@@ -17,19 +20,19 @@ $coach_list = $fcf->requests_sent();
                 <div class="col-md-12">
                     <div class="row bg-title">
                         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                            <h4 class="page-title">Sent Requests</h4>
+                            <h4 class="page-title">Coach Requests</h4>
                         </div>
                         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                             <ol class="breadcrumb">
                                 <li><a href="#">Dashboard</a></li>
-                                <li class="active">Sent Requests</li>
+                                <li class="active">Coach Requests</li>
                             </ol>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
                     <?php if($coach_list): ?>
                     <div class="white-box">
-                        <h3 class="box-title">Sent Requests</h3>
+                        <h3 class="box-title">Coach Requests</h3>
                         <div class="row">
                             <?php foreach ($coach_list as $list) : ?>
                             <div class="col-md-3 mb-5 mt-5">
@@ -38,19 +41,19 @@ $coach_list = $fcf->requests_sent();
                                         style="width: 100%;object-fit: contain;height:200px;object-position:top">
                                     <div class="card-block">
                                         <h4 class="card-title"><?= ucfirst($list['name']) ?> -
-                                            [<?= ucfirst($list['expertise']) ?>]</h4>
-                                        <p class="card-text"><?= substr($list['summary'], 0, 120) ?> ...</p>
+                                            [<?= ucfirst($list['gender']) ?>]</h4>
                                     </div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Age : <?= $list['age'] ?></li>
-                                        <li class="list-group-item">Gender : <?= ucfirst($list['gender']) ?></li>
-                                        <li class="list-group-item">Exp : <?= $list['experience'] ?> </li>
+                                        <li class="list-group-item">Experience : <?= ucwords($list['experience']) ?> Yrs</li>
+                                        <li class="list-group-item">Expertise : <?= ucwords($list['expertise']) ?> </li>
                                     </ul>
                                     <div class="card-block">
                                         <a href="view_coach_profile.php?id=<?= $list['user_id'] ?>"
                                             class="btn btn-primary">view
                                             profile</a>
-                                        <a class="btn btn-success disabled">Request Sent</a>
+                                        <a href="?id=<?=$list['user_id']?>&add=1" class="btn btn-success">Accept</a>
+                                        <a href="?id=<?=$list['user_id']?>&add=0" class="btn btn-danger">Reject</a>
                                     </div>
                                 </div>
                             </div>

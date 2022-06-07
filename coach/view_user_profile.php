@@ -1,17 +1,17 @@
 <?php
-require_once('../classes/User.php');
-$fcf = new User();
+require_once('../classes/Coach.php');
+$fcf = new Coach();
 $id = $_GET['id'];
 if(isset($_GET['add']) && in_array($_GET['add'],array(0,1))){
-    $fcf->coach_add(['id' => $id,'add' => $_GET['add']]);
+    $fcf->client_add(['id' => $id,'add' => $_GET['add']]);
 }
-$is_added = $fcf->is_added_coach_check($id);
-$add = $fcf->coach_check($id);
-$coach_data = $fcf->get_user_data($id,2);
+$add = $fcf->client_check($id);
+$user_data = $fcf->get_user_data($id,1);
+
 ?>
 <?php include('common/header.php') ?>
 <?php
-    if(!$user_data['is_profile_completed']){
+    if(!$coach_data['is_profile_completed']){
         header("Location: index.php");
     }
 ?>
@@ -25,51 +25,49 @@ $coach_data = $fcf->get_user_data($id,2);
         <div class="container-fluid">
             <div class="row bg-title">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h4 class="page-title">Coach Profile</h4>
+                    <h4 class="page-title">User Profile</h4>
                 </div>
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="#">Dashboard</a></li>
-                        <li class="active">Coach Profile</li>
+                        <li class="active">User Profile</li>
                     </ol>
                 </div>
             </div>
             <!-- /.row -->
 
-            <?php if($is_added): ?>
             <div class="row mb-4">
                     <div class="col-lg-2 col-sm-4 col-xs-12">
-                        <a href="?id=<?= $id ?>&add=<?= $add ?>" class="fcbtn btn btn-danger btn-1b"><?= ($add == 1) ? 'Add Coach' : 'Remove Coach' ?></a>
+                        <a href="?id=<?= $id ?>&add=<?= $add ?>" class="fcbtn btn btn-danger btn-1b"><?= ($add == 1) ? 'Add Client' : 'Remove Client' ?></a>
                     </div>
             </div>
-            <?php endif; ?>
 
             <!-- .row -->
             <div class="row">
                 <div class="col-md-4 col-xs-12">
                     <div class="white-box">
-                        <div class="user-bg"> <img width="100%" alt="user" src="<?= $coach_data['profile_pic'] ?>">
+                        <div class="user-bg"> <img width="100%" alt="user" src="<?= $user_data['profile_pic'] ?>">
                             <div class="overlay-box">
                                 <div class="user-content">
-                                    <a href="javascript:void(0)"><img src="<?= $coach_data['profile_pic'] ?>"
+                                    <a href="javascript:void(0)"><img src="<?= $user_data['profile_pic'] ?>"
                                             class="thumb-lg img-circle" alt="img"></a>
-                                    <h4 class="text-white"><?= $coach_data['name'] ?></h4>
-                                    <h5 class="text-white"><?= $coach_data['email'] ?></h5>
+                                    <h4 class="text-white"><?= $user_data['name'] ?></h4>
+                                    <h5 class="text-white"><?= $user_data['email'] ?></h5>
                                 </div>
                             </div>
                         </div>
                         <div class="user-btm-box">
                             <div class="col-md-4 col-sm-4 text-center">
-                                <p class="text-purple">CLIENTS</i></p>
-                                <h2><?= $fcf->cilent_count($id); ?></h2>
+                                <p class="text-purple">Age</i></p>
+                                <h2><?= $user_data['age'] ?> yr.</h2>
                             </div>
                             <div class="col-md-4 col-sm-4 text-center">
-                                <p class="text-blue">EXP.</p>
-                                <h2><?= $coach_data['experience'] ?> yr.</h2>
+                                <p class="text-blue">Weight</p>
+                                <h2><?= $user_data['weight'] ?> kg</h2>
                             </div>
                             <div class="col-md-4 col-sm-4 text-center">
-                                <p class="text-danger">REVIEWS</i></p>
-                                <h2><?= ($coach_data['average_review'] == 0)?'N/A':$coach_data['average_review'].'/5'?>
+                                <p class="text-danger">Height</i></p>
+                                <h2><?= $user_data['height']; ?> cm
                                 </h2>
                             </div>
                         </div>
@@ -88,7 +86,7 @@ $coach_data = $fcf->get_user_data($id,2);
                                 <div class="row">
                                     <div class="col-md-3 col-xs-6 b-r"> <strong>Name</strong>
                                         <br>
-                                        <p class="text-muted"><?= ucwords($coach_data['name']) ?></p>
+                                        <p class="text-muted"><?= ucwords($user_data['name']) ?></p>
                                     </div>
                                     <div class="col-md-3 col-xs-6 b-r"> <strong>Mobile</strong>
                                         <br>
@@ -96,23 +94,26 @@ $coach_data = $fcf->get_user_data($id,2);
                                     </div>
                                     <div class="col-md-3 col-xs-6 b-r"> <strong>Email</strong>
                                         <br>
-                                        <p class="text-muted"><?= $coach_data['email'] ?></p>
+                                        <p class="text-muted"><?= $user_data['email'] ?></p>
                                     </div>
                                     <div class="col-md-3 col-xs-6"> <strong>Gender</strong>
                                         <br>
-                                        <p class="text-muted"><?= ucwords($coach_data['gender']) ?></p>
+                                        <p class="text-muted"><?= ucwords($user_data['gender']) ?></p>
                                     </div>
                                 </div>
                                 <hr>
-                                <p class="m-t-30"><?= $coach_data['summary'] ?></p>
-                                <h4 class="font-bold m-t-30">Expertise</h4>
+                              
+                                <h4 class="font-bold m-t-30">Requirements</h4>
                                 <hr>
-                                <h5><?= ucwords($coach_data['expertise']) ?><span class="pull-right">100%</span>
+                                <?php $requirement = json_decode($user_data['requirement']);
+                                foreach($requirement as $r) : ?>
+                                <h5><?= ucwords($r) ?><span class="pull-right">100%</span>
                                 </h5>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80"
                                         aria-valuemin="0" aria-valuemax="100" style="width:100%;"></div>
                                 </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>

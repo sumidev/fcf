@@ -42,12 +42,14 @@ $user_list = $fcf->get_added_users();
                                     </div>
                                     <div class="el-card-content">
                                         <h3 class="box-title"><?= ucfirst($list['name']) ?> -
-                                            [<?= ucfirst($list['gender']) ?>]</h3> <small>Requirements :
-                                            [<?= ucwords(implode(', ',json_decode($list['requirement']))) ?>]</small>
+                                            [<?= ucfirst($list['gender']) ?>]</h3> 
+                                            <h5>Requirements :</h5>
+                                            <h5>
+                                            [<?= ucwords(implode(', ',json_decode($list['requirement']))) ?>]</h5>
                                         <br />
                                     </div>
                                     <div class="el-card-content">
-                                        <a href="view_coach_profile.php?id=42" class="btn btn-primary">view profile</a>
+                                        <a href="view_user_profile.php?id=<?=$list['user_id']?>" class="btn btn-info">view profile</a>
                                     </div>
                                 </div>
 

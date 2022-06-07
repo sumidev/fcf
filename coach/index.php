@@ -36,7 +36,29 @@ endif;
                 </div>
             </div>
             <?php endif; ?>
-
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="white-box">
+                        <h3 class="box-title">Suggested Clients</h3>
+                        <div class="row">
+                            <?php $user_list = $fcf->client_suggestion($coach_data);
+                            foreach ($user_list as $list) : ?>
+                            <div class="col-md-3 mb-5 mt-5">
+                                <div class="card">
+                                    <img class="card-img-top image-responsive" src="<?= $list['profile_pic'] ?>"
+                                        alt="Card image cap" style="width: 100%;object-fit: contain;height:200px;object-position:top">
+                                    <div class="card-block text-center">
+                                        <h4 class="card-title"><?= ucfirst($list['name']) ?> - [<?= ucfirst($list['gender']) ?>]</h4>
+                                        <h5 class="pt-3 pb-3">[<?= implode(', ',json_decode($list['requirement'])) ?>]</h5>
+                                        <a href="view_user_profile.php?id=<?= $list['user_id'] ?>" class="btn btn-info">view profile</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endforeach;?>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <?php include('common/right-navbar.php') ?>
 
         </div>

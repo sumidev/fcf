@@ -18,17 +18,8 @@
                         <div class="drop-title">You have 4 Notifications</div>
                     </li>
                     <li>
-                        <div class="message-center">
-                            <a href="#">
-                                <div class="user-img"> <img src="../assets/plugins/images/users/pawandeep.jpg"
-                                        alt="user" class="img-circle"> <span
-                                        class="profile-status online pull-right"></span>
-                                </div>
-                                <div class="mail-contnet">
-                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span
-                                        class="time">9:30 AM</span>
-                                </div>
-                            </a>
+                        <div class="message-center" id="noti">
+
                         </div>
                     </li>
                     <li>
@@ -41,11 +32,10 @@
             <!-- /.dropdown -->
             <li class="dropdown">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img
-                        src="<?= ($user_data['profile_pic'])? $user_data['profile_pic'] :'../assets/plugins/images/avatar.webp' ?>"
+                        src="<?= ($admin_data['profile_pic'])? $admin_data['profile_pic'] :'../assets/plugins/images/avatar.webp' ?>"
                         alt="user-img" width="36" height="36" class="img-circle"><b
-                        class="hidden-xs"><?= $user_data['name']; ?></b> </a>
+                        class="hidden-xs"><?= $admin_data['name']; ?></b> </a>
                 <ul class="dropdown-menu dropdown-user animated flipInY">
-                    <li><a href="user_profile.php"><i class="ti-user"></i> My Profile</a></li>
                     <li><a href="?logout=true"><i class="fa fa-power-off"></i> Logout</a></li>
                 </ul>
                 <!-- /.dropdown-user -->
